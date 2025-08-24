@@ -1,4 +1,4 @@
-// 급식 정보 웹앱 JavaScript
+// 급식 정보 웹앱 JavaScript - Pastel Theme
 
 class MealInfoApp {
     constructor() {
@@ -117,6 +117,7 @@ class MealInfoApp {
 
         this.updateDateDisplay(date);
         this.updateMenuItems(mealInfo.DDISH_NM);
+        this.updateNutritionAnalysis(mealInfo.DDISH_NM);
         this.updateAllergenInfo(mealInfo.DDISH_NM);
         this.updateNutritionInfo(mealInfo.NTR_INFO);
         this.updateOriginInfo(mealInfo.ORPLC_INFO);
@@ -126,12 +127,14 @@ class MealInfoApp {
         // 성공 알림
         Swal.fire({
             icon: 'success',
-            title: '급식 정보를 불러왔습니다!',
+            title: '급식 정보를 불러왔습니다! 💕',
             text: `${this.formatDate(date)} 중식 정보입니다.`,
             timer: 2000,
             showConfirmButton: false,
             toast: true,
-            position: 'top-end'
+            position: 'top-end',
+            background: '#fce4ec',
+            color: '#4a148c'
         });
     }
 
@@ -159,11 +162,112 @@ class MealInfoApp {
         
         menuContainer.innerHTML = dishes.map(dish => {
             const cleanDish = dish.replace(/\d+\./g, '').trim();
-            return `<div class="menu-item fade-in-up">
-                        <i class="fas fa-utensils text-orange-500 mr-2"></i>
+            return `<div class="menu-item fade-in-up sparkle">
+                        <i class="fas fa-utensils text-pink-400 mr-2"></i>
                         ${cleanDish}
                     </div>`;
         }).join('');
+    }
+
+    updateNutritionAnalysis(dishInfo) {
+        const analysisContainer = document.getElementById('nutritionAnalysis');
+        const dishes = dishInfo.split('\n').filter(dish => dish.trim());
+        const analysis = this.analyzeNutrition(dishes);
+        
+        analysisContainer.innerHTML = analysis.map(item => {
+            return `<div class="nutrition-analysis-item fade-in-up">
+                        <div class="nutrition-analysis-title">
+                            <i class="fas fa-star text-yellow-400 mr-2"></i>
+                            ${item.title}
+                        </div>
+                        <div class="nutrition-analysis-desc">
+                            ${item.description}
+                        </div>
+                    </div>`;
+        }).join('');
+    }
+
+    analyzeNutrition(dishes) {
+        const analysis = [];
+        const cleanDishes = dishes.map(dish => dish.replace(/\d+\./g, '').trim());
+        
+        // 주요 영양소 분석
+        const hasRice = cleanDishes.some(dish => 
+            dish.includes('밥') || dish.includes('쌀') || dish.includes('현미') || dish.includes('찰')
+        );
+        
+        const hasSoup = cleanDishes.some(dish => 
+            dish.includes('국') || dish.includes('탕') || dish.includes('찌개')
+        );
+        
+        const hasMeat = cleanDishes.some(dish => 
+            dish.includes('고기') || dish.includes('돼지') || dish.includes('소고기') || 
+            dish.includes('닭') || dish.includes('오리') || dish.includes('불고기')
+        );
+        
+        const hasFish = cleanDishes.some(dish => 
+            dish.includes('생선') || dish.includes('고등어') || dish.includes('갈치') || 
+            dish.includes('연어') || dish.includes('참치') || dish.includes('오징어')
+        );
+        
+        const hasVegetables = cleanDishes.some(dish => 
+            dish.includes('나물') || dish.includes('무침') || dish.includes('샐러드') || 
+            dish.includes('채소') || dish.includes('김치')
+        );
+        
+        const hasFruit = cleanDishes.some(dish => 
+            dish.includes('과일') || dish.includes('사과') || dish.includes('바나나') || 
+            dish.includes('오렌지') || dish.includes('포도') || dish.includes('귤')
+        );
+
+        // 탄수화물 (밥류)
+        if (hasRice) {
+            analysis.push({
+                title: '탄수화물 공급원',
+                description: '밥류가 포함되어 있어 에너지의 주요 공급원이 됩니다. 학생들의 학습 활동에 필요한 포도당을 제공해요! 💪'
+            });
+        }
+
+        // 단백질 (고기, 생선)
+        if (hasMeat || hasFish) {
+            analysis.push({
+                title: '단백질 공급원',
+                description: '고기나 생선이 포함되어 있어 근육 발달과 성장에 필요한 단백질을 공급합니다. 건강한 몸을 만들어요! 🏃‍♀️'
+            });
+        }
+
+        // 비타민과 미네랄 (채소, 과일)
+        if (hasVegetables) {
+            analysis.push({
+                title: '비타민 & 미네랄',
+                description: '채소류가 포함되어 있어 면역력 강화와 피부 건강에 좋은 비타민과 미네랄을 공급합니다. 예쁜 피부를 만들어요! ✨'
+            });
+        }
+
+        if (hasFruit) {
+            analysis.push({
+                title: '과일의 영양',
+                description: '과일이 포함되어 있어 항산화 물질과 비타민C를 공급합니다. 활력과 에너지를 채워줘요! 🍎'
+            });
+        }
+
+        // 수분 공급
+        if (hasSoup) {
+            analysis.push({
+                title: '수분 공급',
+                description: '국이나 탕이 포함되어 있어 하루에 필요한 수분을 보충합니다. 신진대사를 원활하게 해요! 💧'
+            });
+        }
+
+        // 균형 잡힌 영양
+        if (analysis.length >= 3) {
+            analysis.push({
+                title: '균형 잡힌 영양',
+                description: '다양한 영양소가 골고루 포함된 균형 잡힌 식단입니다. 건강한 성장과 발달에 도움이 됩니다! 🌟'
+            });
+        }
+
+        return analysis;
     }
 
     updateAllergenInfo(dishInfo) {
@@ -171,7 +275,7 @@ class MealInfoApp {
         const allergens = this.extractAllergens(dishInfo);
         
         if (allergens.length === 0) {
-            allergenContainer.innerHTML = '<p class="text-green-600"><i class="fas fa-check-circle mr-2"></i>알레르기 성분이 없습니다.</p>';
+            allergenContainer.innerHTML = '<p class="text-green-600"><i class="fas fa-check-circle mr-2"></i>알레르기 성분이 없습니다. 안전하게 드세요! 💚</p>';
             return;
         }
 
@@ -318,7 +422,9 @@ class MealInfoApp {
             title: '오류 발생',
             text: message,
             confirmButtonText: '확인',
-            confirmButtonColor: '#667eea'
+            confirmButtonColor: '#f093fb',
+            background: '#fce4ec',
+            color: '#4a148c'
         });
     }
 

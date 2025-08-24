@@ -17,124 +17,146 @@
     <!-- Font Awesome -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@300;400;500;700&display=swap" rel="stylesheet">
+    
     <!-- Custom CSS -->
     <link rel="stylesheet" href="style.css">
 </head>
-<body class="bg-gradient-to-br from-blue-50 to-indigo-100 min-h-screen">
+<body class="bg-gradient-to-br from-pink-50 via-purple-50 to-blue-50 min-h-screen">
     <div class="container mx-auto px-4 py-8">
         <!-- Header -->
         <div class="text-center mb-8">
             <h1 class="text-4xl font-bold text-gray-800 mb-2">
-                <i class="fas fa-utensils text-orange-500 mr-3"></i>
+                <i class="fas fa-utensils text-pink-400 mr-3"></i>
                 합포여자중학교 급식 정보
             </h1>
-            <p class="text-gray-600">오늘의 메뉴를 확인해보세요!</p>
+            <p class="text-gray-600">오늘의 메뉴를 확인해보세요! 💕</p>
         </div>
 
-        <!-- Date Selection Card -->
-        <div class="bg-white rounded-lg shadow-lg p-6 mb-6">
-            <div class="row align-items-center">
-                <div class="col-md-6">
-                    <label for="mealDate" class="form-label fw-bold text-gray-700">
-                        <i class="fas fa-calendar-alt text-blue-500 mr-2"></i>
-                        날짜 선택
-                    </label>
-                    <input type="date" id="mealDate" class="form-control form-control-lg">
+        <div class="row">
+            <!-- Left Side: Meal Information -->
+            <div class="col-lg-8 mb-6">
+                <!-- Loading Spinner -->
+                <div id="loadingSpinner" class="text-center d-none">
+                    <div class="spinner-border text-pink-400" role="status">
+                        <span class="visually-hidden">Loading...</span>
+                    </div>
+                    <p class="mt-2 text-gray-600">급식 정보를 불러오는 중...</p>
                 </div>
-                <div class="col-md-6">
-                    <button id="searchBtn" class="btn btn-primary btn-lg w-100 mt-4 mt-md-0">
-                        <i class="fas fa-search mr-2"></i>
-                        급식 정보 조회
-                    </button>
-                </div>
-            </div>
-        </div>
 
-        <!-- Quick Date Buttons -->
-        <div class="bg-white rounded-lg shadow-lg p-4 mb-6">
-            <h5 class="text-gray-700 mb-3">
-                <i class="fas fa-clock text-green-500 mr-2"></i>
-                빠른 선택
-            </h5>
-            <div class="d-flex flex-wrap gap-2">
-                <button class="btn btn-outline-primary quick-date" data-days="0">오늘</button>
-                <button class="btn btn-outline-primary quick-date" data-days="1">내일</button>
-                <button class="btn btn-outline-primary quick-date" data-days="2">모레</button>
-                <button class="btn btn-outline-primary quick-date" data-days="-1">어제</button>
-            </div>
-        </div>
-
-        <!-- Loading Spinner -->
-        <div id="loadingSpinner" class="text-center d-none">
-            <div class="spinner-border text-primary" role="status">
-                <span class="visually-hidden">Loading...</span>
-            </div>
-            <p class="mt-2 text-gray-600">급식 정보를 불러오는 중...</p>
-        </div>
-
-        <!-- Meal Information Card -->
-        <div id="mealInfo" class="bg-white rounded-lg shadow-lg p-6 d-none">
-            <div class="row">
-                <div class="col-md-8">
-                    <h3 class="text-2xl font-bold text-gray-800 mb-4">
-                        <i class="fas fa-utensils text-orange-500 mr-2"></i>
-                        <span id="mealDateDisplay"></span> 중식
-                    </h3>
+                <!-- Meal Information Card -->
+                <div id="mealInfo" class="bg-white rounded-2xl shadow-lg p-6 d-none">
+                    <div class="mb-6">
+                        <h3 class="text-2xl font-bold text-gray-800 mb-4">
+                            <i class="fas fa-utensils text-pink-400 mr-2"></i>
+                            <span id="mealDateDisplay"></span> 중식
+                        </h3>
+                    </div>
                     
                     <!-- Menu Items -->
-                    <div class="mb-4">
-                        <h5 class="text-gray-700 mb-3">
-                            <i class="fas fa-list text-blue-500 mr-2"></i>
-                            메뉴
+                    <div class="mb-6">
+                        <h5 class="text-gray-700 mb-3 flex items-center">
+                            <i class="fas fa-list text-purple-400 mr-2"></i>
+                            메뉴 구성
                         </h5>
-                        <div id="menuItems" class="bg-gray-50 rounded-lg p-4">
+                        <div id="menuItems" class="bg-pink-50 rounded-xl p-4">
                             <!-- Menu items will be populated here -->
                         </div>
                     </div>
 
-                    <!-- Allergen Information -->
-                    <div class="mb-4">
-                        <h5 class="text-gray-700 mb-3">
-                            <i class="fas fa-exclamation-triangle text-red-500 mr-2"></i>
-                            알레르기 정보
+                    <!-- Nutrition Analysis -->
+                    <div class="mb-6">
+                        <h5 class="text-gray-700 mb-3 flex items-center">
+                            <i class="fas fa-chart-pie text-blue-400 mr-2"></i>
+                            영양 성분 분석
                         </h5>
-                        <div id="allergenInfo" class="bg-red-50 rounded-lg p-4">
-                            <!-- Allergen info will be populated here -->
+                        <div id="nutritionAnalysis" class="bg-blue-50 rounded-xl p-4">
+                            <!-- Nutrition analysis will be populated here -->
                         </div>
                     </div>
-                </div>
 
-                <div class="col-md-4">
-                    <!-- Nutrition Information -->
-                    <div class="bg-blue-50 rounded-lg p-4 mb-4">
-                        <h5 class="text-gray-700 mb-3">
-                            <i class="fas fa-chart-pie text-blue-500 mr-2"></i>
-                            영양 정보
+                    <!-- Allergen Information -->
+                    <div class="mb-6">
+                        <h5 class="text-gray-700 mb-3 flex items-center">
+                            <i class="fas fa-exclamation-triangle text-red-400 mr-2"></i>
+                            알레르기 정보
                         </h5>
-                        <div id="nutritionInfo">
-                            <!-- Nutrition info will be populated here -->
+                        <div id="allergenInfo" class="bg-red-50 rounded-xl p-4">
+                            <!-- Allergen info will be populated here -->
                         </div>
                     </div>
 
                     <!-- Origin Information -->
-                    <div class="bg-green-50 rounded-lg p-4">
-                        <h5 class="text-gray-700 mb-3">
-                            <i class="fas fa-leaf text-green-500 mr-2"></i>
+                    <div>
+                        <h5 class="text-gray-700 mb-3 flex items-center">
+                            <i class="fas fa-leaf text-green-400 mr-2"></i>
                             원산지 정보
                         </h5>
-                        <div id="originInfo" class="small">
+                        <div id="originInfo" class="bg-green-50 rounded-xl p-4 small">
                             <!-- Origin info will be populated here -->
                         </div>
                     </div>
                 </div>
-            </div>
-        </div>
 
-        <!-- No Data Message -->
-        <div id="noDataMessage" class="bg-white rounded-lg shadow-lg p-6 text-center d-none">
-            <i class="fas fa-info-circle text-gray-400 fa-3x mb-3"></i>
-            <h4 class="text-gray-600">해당 날짜의 급식 정보가 없습니다.</h4>
-            <p class="text-gray-500">다른 날짜를 선택해보세요.</p>
+                <!-- No Data Message -->
+                <div id="noDataMessage" class="bg-white rounded-2xl shadow-lg p-6 text-center d-none">
+                    <i class="fas fa-info-circle text-gray-400 fa-3x mb-3"></i>
+                    <h4 class="text-gray-600">해당 날짜의 급식 정보가 없습니다.</h4>
+                    <p class="text-gray-500">다른 날짜를 선택해보세요.</p>
+                </div>
+            </div>
+
+            <!-- Right Side: Date Selection -->
+            <div class="col-lg-4">
+                <!-- Date Selection Card -->
+                <div class="bg-white rounded-2xl shadow-lg p-6 mb-6">
+                    <h5 class="text-gray-700 mb-4 flex items-center">
+                        <i class="fas fa-calendar-alt text-pink-400 mr-2"></i>
+                        날짜 선택
+                    </h5>
+                    <div class="mb-4">
+                        <input type="date" id="mealDate" class="form-control form-control-lg">
+                    </div>
+                    <button id="searchBtn" class="btn btn-primary btn-lg w-100">
+                        <i class="fas fa-search mr-2"></i>
+                        급식 정보 조회
+                    </button>
+                </div>
+
+                <!-- Quick Date Buttons -->
+                <div class="bg-white rounded-2xl shadow-lg p-6 mb-6">
+                    <h5 class="text-gray-700 mb-4 flex items-center">
+                        <i class="fas fa-clock text-purple-400 mr-2"></i>
+                        빠른 선택
+                    </h5>
+                    <div class="d-grid gap-2">
+                        <button class="btn btn-outline-primary quick-date" data-days="0">
+                            <i class="fas fa-sun mr-2"></i>오늘
+                        </button>
+                        <button class="btn btn-outline-primary quick-date" data-days="1">
+                            <i class="fas fa-cloud mr-2"></i>내일
+                        </button>
+                        <button class="btn btn-outline-primary quick-date" data-days="2">
+                            <i class="fas fa-calendar mr-2"></i>모레
+                        </button>
+                        <button class="btn btn-outline-primary quick-date" data-days="-1">
+                            <i class="fas fa-arrow-left mr-2"></i>어제
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Nutrition Information -->
+                <div class="bg-white rounded-2xl shadow-lg p-6">
+                    <h5 class="text-gray-700 mb-4 flex items-center">
+                        <i class="fas fa-chart-line text-blue-400 mr-2"></i>
+                        영양 정보
+                    </h5>
+                    <div id="nutritionInfo">
+                        <!-- Nutrition info will be populated here -->
+                    </div>
+                </div>
+            </div>
         </div>
     </div>
 
