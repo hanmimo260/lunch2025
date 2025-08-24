@@ -1,0 +1,252 @@
+/* Custom Styles for Meal Information App */
+
+/* Smooth transitions */
+* {
+    transition: all 0.3s ease;
+}
+
+/* Custom button hover effects */
+.btn {
+    border-radius: 12px;
+    font-weight: 600;
+    transition: all 0.3s ease;
+}
+
+.btn:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+}
+
+.btn-primary {
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    border: none;
+}
+
+.btn-primary:hover {
+    background: linear-gradient(135deg, #5a6fd8 0%, #6a4190 100%);
+}
+
+.btn-outline-primary {
+    border-color: #667eea;
+    color: #667eea;
+}
+
+.btn-outline-primary:hover {
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    border-color: transparent;
+}
+
+/* Card animations */
+.bg-white {
+    border-radius: 16px;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
+    transition: all 0.3s ease;
+}
+
+.bg-white:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 8px 30px rgba(0, 0, 0, 0.12);
+}
+
+/* Form controls */
+.form-control {
+    border-radius: 12px;
+    border: 2px solid #e5e7eb;
+    padding: 12px 16px;
+    font-size: 16px;
+    transition: all 0.3s ease;
+}
+
+.form-control:focus {
+    border-color: #667eea;
+    box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.1);
+}
+
+/* Menu items styling */
+.menu-item {
+    background: white;
+    border-radius: 8px;
+    padding: 12px 16px;
+    margin-bottom: 8px;
+    border-left: 4px solid #667eea;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+    transition: all 0.3s ease;
+}
+
+.menu-item:hover {
+    transform: translateX(4px);
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+}
+
+/* Allergen badges */
+.allergen-badge {
+    display: inline-block;
+    background: #fee2e2;
+    color: #dc2626;
+    padding: 4px 8px;
+    border-radius: 6px;
+    font-size: 12px;
+    font-weight: 600;
+    margin: 2px;
+    border: 1px solid #fecaca;
+}
+
+/* Nutrition info styling */
+.nutrition-item {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 8px 0;
+    border-bottom: 1px solid #e5e7eb;
+}
+
+.nutrition-item:last-child {
+    border-bottom: none;
+}
+
+.nutrition-label {
+    font-weight: 600;
+    color: #374151;
+}
+
+.nutrition-value {
+    color: #667eea;
+    font-weight: 700;
+}
+
+/* Origin info styling */
+.origin-item {
+    background: #f0f9ff;
+    border-radius: 6px;
+    padding: 8px 12px;
+    margin-bottom: 6px;
+    border-left: 3px solid #0ea5e9;
+    font-size: 14px;
+}
+
+/* Loading animation */
+.spinner-border {
+    width: 3rem;
+    height: 3rem;
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+    .container {
+        padding: 16px;
+    }
+    
+    h1 {
+        font-size: 2rem !important;
+    }
+    
+    .btn-lg {
+        padding: 12px 24px;
+        font-size: 16px;
+    }
+}
+
+/* Custom scrollbar */
+::-webkit-scrollbar {
+    width: 8px;
+}
+
+::-webkit-scrollbar-track {
+    background: #f1f5f9;
+    border-radius: 4px;
+}
+
+::-webkit-scrollbar-thumb {
+    background: #cbd5e1;
+    border-radius: 4px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+    background: #94a3b8;
+}
+
+/* Animation for content appearance */
+@keyframes fadeInUp {
+    from {
+        opacity: 0;
+        transform: translateY(20px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.fade-in-up {
+    animation: fadeInUp 0.6s ease-out;
+}
+
+/* Pulse animation for loading states */
+@keyframes pulse {
+    0%, 100% {
+        opacity: 1;
+    }
+    50% {
+        opacity: 0.5;
+    }
+}
+
+.pulse {
+    animation: pulse 2s cubic-bezier(0.4, 0, 0.6, 1) infinite;
+}
+
+/* Gradient text effect */
+.gradient-text {
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+}
+
+/* Custom focus styles for accessibility */
+.btn:focus,
+.form-control:focus {
+    outline: none;
+    box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.25);
+}
+
+/* Dark mode support */
+@media (prefers-color-scheme: dark) {
+    body {
+        background: linear-gradient(135deg, #1e293b 0%, #334155 100%);
+        color: #f1f5f9;
+    }
+    
+    .bg-white {
+        background-color: #1e293b !important;
+        color: #f1f5f9;
+    }
+    
+    .text-gray-800 {
+        color: #f1f5f9 !important;
+    }
+    
+    .text-gray-600 {
+        color: #cbd5e1 !important;
+    }
+    
+    .text-gray-500 {
+        color: #94a3b8 !important;
+    }
+    
+    .bg-gray-50 {
+        background-color: #334155 !important;
+    }
+    
+    .bg-red-50 {
+        background-color: #450a0a !important;
+    }
+    
+    .bg-blue-50 {
+        background-color: #0c4a6e !important;
+    }
+    
+    .bg-green-50 {
+        background-color: #064e3b !important;
+    }
+}

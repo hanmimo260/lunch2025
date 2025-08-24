@@ -1,0 +1,150 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>합포여자중학교 급식 정보</title>
+    
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    
+    <!-- SweetAlert2 CSS -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/sweetalert2@11/dist/sweetalert2.min.css">
+    
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <!-- Custom CSS -->
+    <link rel="stylesheet" href="style.css">
+</head>
+<body class="bg-gradient-to-br from-blue-50 to-indigo-100 min-h-screen">
+    <div class="container mx-auto px-4 py-8">
+        <!-- Header -->
+        <div class="text-center mb-8">
+            <h1 class="text-4xl font-bold text-gray-800 mb-2">
+                <i class="fas fa-utensils text-orange-500 mr-3"></i>
+                합포여자중학교 급식 정보
+            </h1>
+            <p class="text-gray-600">오늘의 메뉴를 확인해보세요!</p>
+        </div>
+
+        <!-- Date Selection Card -->
+        <div class="bg-white rounded-lg shadow-lg p-6 mb-6">
+            <div class="row align-items-center">
+                <div class="col-md-6">
+                    <label for="mealDate" class="form-label fw-bold text-gray-700">
+                        <i class="fas fa-calendar-alt text-blue-500 mr-2"></i>
+                        날짜 선택
+                    </label>
+                    <input type="date" id="mealDate" class="form-control form-control-lg">
+                </div>
+                <div class="col-md-6">
+                    <button id="searchBtn" class="btn btn-primary btn-lg w-100 mt-4 mt-md-0">
+                        <i class="fas fa-search mr-2"></i>
+                        급식 정보 조회
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Quick Date Buttons -->
+        <div class="bg-white rounded-lg shadow-lg p-4 mb-6">
+            <h5 class="text-gray-700 mb-3">
+                <i class="fas fa-clock text-green-500 mr-2"></i>
+                빠른 선택
+            </h5>
+            <div class="d-flex flex-wrap gap-2">
+                <button class="btn btn-outline-primary quick-date" data-days="0">오늘</button>
+                <button class="btn btn-outline-primary quick-date" data-days="1">내일</button>
+                <button class="btn btn-outline-primary quick-date" data-days="2">모레</button>
+                <button class="btn btn-outline-primary quick-date" data-days="-1">어제</button>
+            </div>
+        </div>
+
+        <!-- Loading Spinner -->
+        <div id="loadingSpinner" class="text-center d-none">
+            <div class="spinner-border text-primary" role="status">
+                <span class="visually-hidden">Loading...</span>
+            </div>
+            <p class="mt-2 text-gray-600">급식 정보를 불러오는 중...</p>
+        </div>
+
+        <!-- Meal Information Card -->
+        <div id="mealInfo" class="bg-white rounded-lg shadow-lg p-6 d-none">
+            <div class="row">
+                <div class="col-md-8">
+                    <h3 class="text-2xl font-bold text-gray-800 mb-4">
+                        <i class="fas fa-utensils text-orange-500 mr-2"></i>
+                        <span id="mealDateDisplay"></span> 중식
+                    </h3>
+                    
+                    <!-- Menu Items -->
+                    <div class="mb-4">
+                        <h5 class="text-gray-700 mb-3">
+                            <i class="fas fa-list text-blue-500 mr-2"></i>
+                            메뉴
+                        </h5>
+                        <div id="menuItems" class="bg-gray-50 rounded-lg p-4">
+                            <!-- Menu items will be populated here -->
+                        </div>
+                    </div>
+
+                    <!-- Allergen Information -->
+                    <div class="mb-4">
+                        <h5 class="text-gray-700 mb-3">
+                            <i class="fas fa-exclamation-triangle text-red-500 mr-2"></i>
+                            알레르기 정보
+                        </h5>
+                        <div id="allergenInfo" class="bg-red-50 rounded-lg p-4">
+                            <!-- Allergen info will be populated here -->
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-md-4">
+                    <!-- Nutrition Information -->
+                    <div class="bg-blue-50 rounded-lg p-4 mb-4">
+                        <h5 class="text-gray-700 mb-3">
+                            <i class="fas fa-chart-pie text-blue-500 mr-2"></i>
+                            영양 정보
+                        </h5>
+                        <div id="nutritionInfo">
+                            <!-- Nutrition info will be populated here -->
+                        </div>
+                    </div>
+
+                    <!-- Origin Information -->
+                    <div class="bg-green-50 rounded-lg p-4">
+                        <h5 class="text-gray-700 mb-3">
+                            <i class="fas fa-leaf text-green-500 mr-2"></i>
+                            원산지 정보
+                        </h5>
+                        <div id="originInfo" class="small">
+                            <!-- Origin info will be populated here -->
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- No Data Message -->
+        <div id="noDataMessage" class="bg-white rounded-lg shadow-lg p-6 text-center d-none">
+            <i class="fas fa-info-circle text-gray-400 fa-3x mb-3"></i>
+            <h4 class="text-gray-600">해당 날짜의 급식 정보가 없습니다.</h4>
+            <p class="text-gray-500">다른 날짜를 선택해보세요.</p>
+        </div>
+    </div>
+
+    <!-- Bootstrap JS -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    
+    <!-- SweetAlert2 JS -->
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    
+    <!-- Custom JS -->
+    <script src="script.js"></script>
+</body>
+</html>
